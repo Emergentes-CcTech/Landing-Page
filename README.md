@@ -1,4 +1,4 @@
-# IoBuild — Landing Page
+# IoBuild - Landing Page
 
 Sitio público de IoBuild: plataforma IoT para la administración de condominios. Mide el agua y la energía de las áreas comunes, detecta fugas y calcula la cuota de mantenimiento de cada unidad según su participación (Ley N.° 27157).
 
