@@ -4,7 +4,7 @@
  */
 
 // Global variables for i18n
-let currentLang = 'es'; // Idioma por defecto: el público objetivo está en Lima
+let currentLang = 'en'; // Default language
 let translations = {};
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -29,7 +29,7 @@ async function initI18n() {
         translations = await response.json();
         
         // Get saved language or use default
-        currentLang = localStorage.getItem('preferred-language') || 'es';
+        currentLang = localStorage.getItem('preferred-language') || 'en';
         
         // Apply translations
         applyTranslations();
@@ -373,8 +373,10 @@ function initLazyLoading() {
  * Adds fade-in animations for elements as they come into view
  */
 function initScrollAnimations() {
+    // Revela cada bloque al entrar en pantalla para marcar el orden de lectura; sin movimiento si el usuario lo pidió
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const animatedElements = document.querySelectorAll(
-        '.benefit-card, .testimonial-card, .pricing-card, .value-card, .team-card'
+        '.step, .benefit-card, .feature-item, .feature-tiles__grid li, .pricing-card, .value-card, .team-card'
     );
     
     // Add initial styles for animation
@@ -455,37 +457,6 @@ function initFormHandling() {
 }
 
 /**
- * Header Scroll Effect
- * Adds scroll-based styling to the header
- */
-function initHeaderScrollEffect() {
-    const header = document.querySelector('.main-header');
-    let lastScrollY = window.scrollY;
-    
-    window.addEventListener('scroll', function() {
-        const currentScrollY = window.scrollY;
-        
-        if (currentScrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-        
-        // Previous behavior hid the header when scrolling down. Disabled so header remains visible.
-        // If you prefer auto-hide, uncomment the block below.
-        /*
-        if (currentScrollY > lastScrollY && currentScrollY > 200) {
-            header.style.transform = 'translateY(-100%)';
-        } else {
-            header.style.transform = 'translateY(0)';
-        }
-        */
-        
-        lastScrollY = currentScrollY;
-    });
-}
-
-/**
  * Utility Functions
  */
 
@@ -516,8 +487,6 @@ function throttle(func, limit) {
     };
 }
 
-// Initialize header scroll effect with throttling
-window.addEventListener('scroll', throttle(initHeaderScrollEffect, 10));
 
 /**
  * Analytics Integration Placeholder

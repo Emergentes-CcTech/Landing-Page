@@ -24,7 +24,9 @@ Contrato de 24 meses, instalación incluida y equipo adicional a S/ 30 + IGV al 
 
 ## Idiomas
 
-El sitio está en español por defecto, con inglés disponible en el selector. Los textos de cada página están en `assets/translations.json`, agrupados por página (`index`, `about`, `faq`) y en `common` para el encabezado y el pie. Cada clave corresponde a un atributo `data-translate` del HTML.
+El sitio está en inglés por defecto, con español disponible en el selector (la elección se recuerda en el navegador). Los textos de cada página están en `assets/translations.json`, agrupados por página (`index`, `about`, `faq`) y en `common` para el encabezado y el pie. Cada clave corresponde a un atributo `data-translate` del HTML.
+
+El texto fijo del HTML está en inglés, igual que `translations.json` → `en`. Si cambias un texto, actualízalo en los dos idiomas del JSON y también en el HTML, para que la primera carga y los buscadores vean la versión correcta.
 
 ## Ejecutarlo localmente
 

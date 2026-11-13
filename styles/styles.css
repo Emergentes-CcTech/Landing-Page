@@ -1722,3 +1722,122 @@ p {
 .team-card__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .team-grid--avatars .team-card__description { font-size: var(--font-size-sm); }
 @media (max-width: 600px) { .team-grid--avatars .team-card { flex-basis: 100%; } }
+
+/* =====================================================================
+   Pasada de diseño (taste): bento de beneficios, mosaicos del propietario
+   y movimiento con propósito que respeta prefers-reduced-motion
+   ===================================================================== */
+
+/* Beneficios en bento: una tarjeta alta destacada, cuatro chicas y una ancha que cierra */
+.benefits-grid.benefits-grid--bento {
+    grid-template-columns: 1.35fr 1fr 1fr;
+    gap: var(--spacing-6);
+}
+.benefits-grid--bento .benefit-card { text-align: left; }
+.benefits-grid--bento .benefit-card__icon { justify-content: flex-start; margin-bottom: var(--spacing-4); }
+.benefits-grid--bento .benefit-card__icon i { font-size: 1.75rem; }
+.benefit-card--featured {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--spacing-10);
+    background: linear-gradient(160deg, var(--color-primary-600) 0%, var(--color-primary-800) 100%);
+    box-shadow: 0 18px 40px -18px rgba(4, 120, 87, 0.55);
+}
+.benefit-card--featured .benefit-card__icon { color: var(--color-primary-200); margin-bottom: auto; }
+.benefit-card--featured .benefit-card__icon i { font-size: 2.75rem; }
+.benefit-card--featured .benefit-card__title { color: var(--color-text-inverse); font-size: var(--font-size-3xl); margin-top: var(--spacing-12); }
+.benefit-card--featured .benefit-card__description { color: rgba(255, 255, 255, 0.9); font-size: var(--font-size-lg); }
+.benefit-card__extra {
+    margin: var(--spacing-6) 0 0;
+    padding-top: var(--spacing-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+}
+.benefit-card--wide {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: var(--spacing-3) var(--spacing-6);
+    background: var(--color-primary-50);
+    box-shadow: none;
+    border: 1px solid var(--color-primary-100);
+}
+.benefit-card--wide .benefit-card__icon,
+.benefit-card--wide .benefit-card__title { margin: 0; }
+.benefit-card--wide .benefit-card__title { white-space: nowrap; }
+@media (max-width: 960px) {
+    .benefits-grid.benefits-grid--bento { grid-template-columns: 1fr 1fr; }
+    .benefit-card--featured { grid-column: 1 / -1; grid-row: auto; }
+    .benefit-card--featured .benefit-card__title { margin-top: var(--spacing-6); }
+}
+@media (max-width: 600px) {
+    .benefits-grid.benefits-grid--bento { grid-template-columns: 1fr; }
+    .benefit-card--wide { grid-template-columns: 1fr; }
+    .benefit-card--wide .benefit-card__title { white-space: normal; }
+}
+
+/* Propietario: intro apilada y una fila de cuatro mosaicos (rompe el zigzag) */
+.feature-tiles { display: grid; gap: var(--spacing-8); }
+.feature-tiles__intro { max-width: 65ch; }
+.feature-tiles__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+}
+.feature-tiles__grid li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    padding: var(--spacing-6);
+    background: var(--color-surface);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-xl);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-snug);
+}
+.feature-tiles__grid i {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+}
+@media (max-width: 960px) { .feature-tiles__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .feature-tiles__grid { grid-template-columns: 1fr; } }
+
+/* Respuesta táctil en botones */
+.cta-button:active, .cta-primary:active { transform: translateY(1px) scale(0.98); }
+
+/* Entrada del hero: texto primero y luego la cuota de ejemplo, para guiar la lectura */
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes iob-rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: none; }
+    }
+    .hero__text > * { animation: iob-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero__text > :nth-child(2) { animation-delay: 0.06s; }
+    .hero__text > :nth-child(3) { animation-delay: 0.12s; }
+    .hero__text > :nth-child(4) { animation-delay: 0.18s; }
+    .hero__visual .mock-card { animation: iob-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Hero: titular en máximo dos líneas en escritorio */
+@media (min-width: 1025px) {
+    .hero__content { grid-template-columns: 1.2fr 1fr; }
+    .hero__title { font-size: clamp(2.5rem, 3.3vw, 3.25rem); letter-spacing: -0.02em; }
+}
